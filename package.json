@@ -1,0 +1,33 @@
+{
+  "name": "web_components_flux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "watch": "watchify src/app.js -o dist/app.js -v",
+    "build": "browserify src/app.js -o dist/app.js",
+    "start": "npm run watch & nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XescuGC/web_components_flux"
+  },
+  "keywords": [
+    "flux",
+    "web",
+    "components"
+  ],
+  "author": "xescugc <xescugil@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XescuGC/web_components_flux/issues"
+  },
+  "homepage": "https://github.com/XescuGC/web_components_flux",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "watchify": "^3.7.0"
+  }
+}

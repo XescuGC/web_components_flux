@@ -1,0 +1,22 @@
+<template >
+  <h1>Movies</h1>
+</template>
+
+<script>
+  (function () {
+    const importDoc = document.currentScript.ownerDocument;
+    const mainDoc = document;
+
+    function renderContainer() {
+      const template = importDoc.querySelector('template');
+      const fragment = importDoc.importNode(template.content, true);
+
+      const mountPoint = mainDoc.getElementById('root');
+
+      mountPoint.innerHTML = '';
+      mountPoint.appendChild(fragment);
+    }
+
+    WCFApp.registerContainer('movies', renderContainer);
+  })()
+</script>
