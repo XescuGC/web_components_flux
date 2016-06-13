@@ -1,0 +1,26 @@
+<script>
+  (function() {
+    const proto = Object.create(HTMLLinkElement.prototype);
+
+    const handleClick = function (e) {
+      e.preventDefault();
+      WCFApp.router.goTo(this.attributes.href.value)
+    }
+
+    proto.createdCallback = function() { }
+
+    proto.attachedCallback = function() {
+      this.addEventListener('click', handleClick.bind(this));
+    }
+
+    proto.detachedCallback = function () {
+      this.removeEventListener('click', handleClick.bind(this));
+    }
+
+    const imLink = document.registerElement('wfc-link', {
+      prototype:  proto,
+      extends:    'a'
+    });
+
+  })()
+</script>

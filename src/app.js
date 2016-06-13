@@ -15,8 +15,9 @@ WCFApp.renderContainer = function(container) {
   else { throw `Invalid container to render: ${container}` }
 }
 
-WCFApp.router.register('/',   'movies');
-WCFApp.router.register('/2',  'movie');
+WCFApp.router.register('/',            'movies');
+WCFApp.router.register('/movies',      'movies');
+WCFApp.router.register('/movies/:id',  'movie');
 
 WCFApp.importComponents = function(components) {
   components.forEach(component => {

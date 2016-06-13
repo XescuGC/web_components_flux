@@ -21,6 +21,7 @@
     "tests"
   ],
   "dependencies": {
-    "webcomponentsjs": "^0.7.22"
+    "webcomponentsjs": "^0.7.22",
+    "pure": "^0.6.0"
   }
 }
