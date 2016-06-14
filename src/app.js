@@ -1,9 +1,15 @@
 const router = require('./router');
+const actions = require('./actions/movies').actions;
+const MoviesStore = require('./stores/movies');
 
-const WCFApp = { };
+const WCFApp = {};
 const containers = {};
 
 WCFApp.router = router;
+WCFApp.actions = actions;
+WCFApp.stores = {
+  movies: MoviesStore
+};
 
 WCFApp.registerContainer = function(container, renderer) {
   containers[container] = renderer;
@@ -15,9 +21,9 @@ WCFApp.renderContainer = function(container) {
   else { throw `Invalid container to render: ${container}` }
 }
 
-WCFApp.router.register('/',            'movies');
-WCFApp.router.register('/movies',      'movies');
-WCFApp.router.register('/movies/:id',  'movie');
+WCFApp.router.register('/',               'movies');
+WCFApp.router.register('/movies',         'movies');
+WCFApp.router.register('/movies/:imdbID', 'movie');
 
 WCFApp.importComponents = function(components) {
   components.forEach(component => {
@@ -27,15 +33,16 @@ WCFApp.importComponents = function(components) {
 
 WCFApp.import = function(url) {
   let link = document.querySelector(`link[href='${url}'`);
-  if (!link) {
-    link      = document.createElement('link');
-    link.rel  = 'import';
-    //link.setAttribute('async', ''); // make it async!
-    link.href = url
-    document.head.appendChild(link);
 
-    return link;
-  } else { return false }
+  if (link) return false;
+
+  link      = document.createElement('link');
+  link.rel  = 'import';
+  //link.setAttribute('async', ''); // make it async!
+  link.href = url
+  document.head.appendChild(link);
+
+  return link;
 }
 
 window.WCFApp = WCFApp;

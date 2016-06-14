@@ -15,9 +15,12 @@ app.use(express.static(`${__dirname}/dist`));
 app.use(express.static(`${__dirname}/bower_components`));
 app.use(express.static(`${__dirname}/src`));
 
-app.get('/movies', (req, res, next) => {
-  res.json(movies);
+app.get('*', (req, res, next) => {
+  if (req.xhr) { next() }
+  else         { res.sendFile(`${__dirname}/index.html`) }
 });
+
+app.get('/movies', (req, res, next) => { console.log('movies'); res.json(movies)});
 
 app.get('/movies/:id', (req, res, next) => {
   const movie = movies.find(m => m.imdbID === req.params.id);
@@ -25,7 +28,6 @@ app.get('/movies/:id', (req, res, next) => {
   else        { res.status(404).json({ error: 'Movie not found' }) }
 });
 
-app.get('*', (req, res, next) => res.sendFile(`${__dirname}/index.html`));
 
 // Handle errors
 app.use( (err, req, res, next) => {

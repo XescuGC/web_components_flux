@@ -7,9 +7,12 @@
       WCFApp.router.goTo(this.attributes.href.value)
     }
 
-    proto.createdCallback = function() { }
+    proto.createdCallback = function() {
+      console.log('link created')
+    }
 
     proto.attachedCallback = function() {
+      console.log('link attached')
       this.addEventListener('click', handleClick.bind(this));
     }
 

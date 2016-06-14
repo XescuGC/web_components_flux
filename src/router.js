@@ -1,7 +1,7 @@
 let routes = {}
 
 function register(path, container) {
-  routes[path] = { container }
+  routes[`^${path.replace(/\/:.[^\/]*/g, '/(.[^\/]*)')}$`] = { container }
 }
 
 let el = null;
@@ -9,13 +9,12 @@ let el = null;
 function fireRoute () {
   el = el || document.getElementById('root');
 
-  console.log('fireRoute');
   const url = location.hash.slice(1) || location.pathname;
 
-  const route = routes[url];
+  const route = findRoute(url);
 
   if (el && route && route.container) {
-    let link = WCFApp.import(`containers/${route.container}.html`);
+    let link = WCFApp.import(`/containers/${route.container}.html`);
 
     if (link) {
       link.onload = function(e) {
@@ -24,7 +23,6 @@ function fireRoute () {
       link.onerror = function(e) {
         console.trace(e)
       };
-      document.head.appendChild(link);
     }
     else {
       WCFApp.renderContainer(route.container);
@@ -32,6 +30,12 @@ function fireRoute () {
 
     //Object.observe(route.controller, route.render);
   }
+}
+
+function findRoute(url) {
+  let key = Object.keys(routes).find(route => url.match(route));
+
+  return routes[key];
 }
 
 function renderTemplate(el, link, data) {

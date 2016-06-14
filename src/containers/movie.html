@@ -1,0 +1,53 @@
+<template >
+  <h1>Movie</h1>
+  <a is='wcf-link' href='/movies'>
+    Back
+  </a>
+  <div id='movie'></div>
+</template>
+
+<script>
+  (function () {
+    const importDoc = document.currentScript.ownerDocument;
+    const mainDoc = document;
+
+
+    function renderMovies() {
+      console.log('renderMovies');
+      const movies = WCFApp.stores.movies.getAllMovies();
+      const moviesMountPoint = mainDoc.querySelector('#movies-list');
+      movies.forEach(m => {
+        const WCFMovie = document.createElement('wcf-movie');
+        WCFMovie.setAttribute('data-imdbID', m.imdbID);
+        WCFMovie.setAttribute('data-title', m.Title);
+        WCFMovie.setAttribute('data-image', m.Poster);
+        WCFMovie.setAttribute('data-year', m.Year);
+        WCFMovie.setAttribute('data-type', m.Type);
+
+        moviesMountPoint.appendChild(WCFMovie);
+      })
+    }
+
+    function renderContainer() {
+      const mountPoint = mainDoc.getElementById('root');
+      const template = importDoc.querySelector('template');
+      const fragment = importDoc.importNode(template.content, true);
+
+      mountPoint.innerHTML = '';
+      mountPoint.appendChild(fragment);
+
+      // const movies = WCFApp.stores.movies.getAllMovies();
+
+      // if (movies.length) {
+      //   renderMovies(movies)
+      // } else {
+      //   WCFApp.actions.fetchMovies();
+      // }
+
+    }
+
+    // WCFApp.stores.movies.addChangeListener(renderMovies);
+    WCFApp.registerContainer('movie', renderContainer);
+    WCFApp.importComponents(['wcf-link']);
+  })()
+</script>

@@ -2,11 +2,10 @@
   <div class='pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-lg-1-4'>
     <div class="l-box">
       <a class='movie-link' is='wfc-link'>
-        <img class="pure-img recipe-img" />
+        <img class="pure-img movie-image" />
       </a>
       <div class='l-box__content'>
-        <p class='l-box-name movie-name'></p>
-        <p class='l-box-description movie-description'></p>
+        <p class='l-box-name movie-title'></p>
       </div>
     </div>
   </div>
@@ -25,20 +24,19 @@
       // import template into
       const clone = document.importNode(templateContent, true);
 
-      clone.querySelector('.movie-name').textContent = this.getAttribute('data-movie-name');
-      clone.querySelector('.movie-img').src = this.getAttribute('data-movie-img')||'http://placehold.it/920x518';
-      clone.querySelector('.movie-description').textContent = this.getAttribute('data-movie-description');
-      clone.querySelector('.movie-link').attributes.href = "movies/"+this.getAttribute('data-movie-id');
+      clone.querySelector('.movie-title').textContent = this.getAttribute('data-title');
+      clone.querySelector('.movie-image').src = this.getAttribute('data-image')||'http://placehold.it/920x518';
+      clone.querySelector('.movie-link').href = "/movies/"+this.getAttribute('data-imdbID');
 
       const root = this.createShadowRoot();
 
       root.appendChild(clone);
     }
 
-    document.registerElement('wfc-recipe', {
+    document.registerElement('wcf-movie', {
       prototype: proto
     });
 
-    WCFApp.importComponents(['wfc-link']);
+    WCFApp.importComponents(['wcf-link']);
   })()
 </script>
