@@ -12,20 +12,19 @@
     const mainDoc = document;
 
 
-    function renderMovies() {
-      console.log('renderMovies');
-      const movies = WCFApp.stores.movies.getAllMovies();
-      const moviesMountPoint = mainDoc.querySelector('#movies-list');
-      movies.forEach(m => {
-        const WCFMovie = document.createElement('wcf-movie');
-        WCFMovie.setAttribute('data-imdbID', m.imdbID);
-        WCFMovie.setAttribute('data-title', m.Title);
-        WCFMovie.setAttribute('data-image', m.Poster);
-        WCFMovie.setAttribute('data-year', m.Year);
-        WCFMovie.setAttribute('data-type', m.Type);
+    function renderMovie(movie) {
+      movie = movie || WCFApp.stores.movies.getMovie(history.state.params.imdbID);
+      const movieMountPoint = mainDoc.querySelector('#movie');
 
-        moviesMountPoint.appendChild(WCFMovie);
-      })
+      const WCFMovie = document.createElement('wcf-movie');
+
+      WCFMovie.setAttribute('data-imdbID', movie.imdbID);
+      WCFMovie.setAttribute('data-title', movie.Title);
+      WCFMovie.setAttribute('data-image', movie.Poster);
+      WCFMovie.setAttribute('data-year', movie.Year);
+      WCFMovie.setAttribute('data-type', movie.Type);
+
+      movieMountPoint.appendChild(WCFMovie);
     }
 
     function renderContainer() {
@@ -36,18 +35,18 @@
       mountPoint.innerHTML = '';
       mountPoint.appendChild(fragment);
 
-      // const movies = WCFApp.stores.movies.getAllMovies();
+      const movie = WCFApp.stores.movies.getMovie(history.state.params.imdbID);
 
-      // if (movies.length) {
-      //   renderMovies(movies)
-      // } else {
-      //   WCFApp.actions.fetchMovies();
-      // }
+      if (movie) {
+        renderMovie(movie)
+      } else {
+        WCFApp.actions.fetchMovie(history.state.params.imdbID);
+      }
 
     }
 
-    // WCFApp.stores.movies.addChangeListener(renderMovies);
+    WCFApp.stores.movies.addChangeListener(renderMovie);
     WCFApp.registerContainer('movie', renderContainer);
-    WCFApp.importComponents(['wcf-link']);
+    WCFApp.importComponents(['wcf-link', 'wcf-movie']);
   })()
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class='pure-u-1 pure-u-sm-1-2 pure-u-md-1-3 pure-lg-1-4'>
     <div class="l-box">
-      <a class='movie-link' is='wfc-link'>
+      <a class='movie-link' is='wcf-link'>
         <img class="pure-img movie-image" />
       </a>
       <div class='l-box__content'>
@@ -17,6 +17,7 @@
 
     const importDoc = document.currentScript.ownerDocument;
     const mainDoc = document;
+    let root;
 
     proto.createdCallback = function() {
       const templateContent = importDoc.querySelector('template').content;
@@ -24,13 +25,15 @@
       // import template into
       const clone = document.importNode(templateContent, true);
 
-      clone.querySelector('.movie-title').textContent = this.getAttribute('data-title');
-      clone.querySelector('.movie-image').src = this.getAttribute('data-image')||'http://placehold.it/920x518';
-      clone.querySelector('.movie-link').href = "/movies/"+this.getAttribute('data-imdbID');
-
-      const root = this.createShadowRoot();
+      root = this.createShadowRoot();
 
       root.appendChild(clone);
+    }
+
+    proto.attachedCallback = function () {
+      root.querySelector('.movie-title').textContent = this.getAttribute('data-title');
+      root.querySelector('.movie-image').setAttribute('src', this.getAttribute('data-image')||'http://placehold.it/920x518');
+      root.querySelector('.movie-link').setAttribute('href', "/movies/"+this.getAttribute('data-imdbID'));
     }
 
     document.registerElement('wcf-movie', {

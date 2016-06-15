@@ -10,7 +10,6 @@
 
 
     function renderMovies() {
-      console.log('renderMovies');
       const movies = WCFApp.stores.movies.getAllMovies();
       const moviesMountPoint = mainDoc.querySelector('#movies-list');
       movies.forEach(m => {

@@ -27,7 +27,7 @@ WCFApp.router.register('/movies/:imdbID', 'movie');
 
 WCFApp.importComponents = function(components) {
   components.forEach(component => {
-    WCFApp.import(`components/${component}.html`);
+    WCFApp.import(`/components/${component}.html`);
   })
 }
 

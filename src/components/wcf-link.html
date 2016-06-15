@@ -8,11 +8,11 @@
     }
 
     proto.createdCallback = function() {
-      console.log('link created')
+      //console.log('link created')
     }
 
     proto.attachedCallback = function() {
-      console.log('link attached')
+      //console.log('link attached')
       this.addEventListener('click', handleClick.bind(this));
     }
 
@@ -20,7 +20,7 @@
       this.removeEventListener('click', handleClick.bind(this));
     }
 
-    const imLink = document.registerElement('wfc-link', {
+    const imLink = document.registerElement('wcf-link', {
       prototype:  proto,
       extends:    'a'
     });
